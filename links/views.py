@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from  .models import Link
+from .forms import LinkForm
 
 # Create your views here.
 def index(request):
@@ -10,8 +11,15 @@ def index(request):
     }
     return render(request, 'links/index.html', context)
 
-def root_link(self, link_slug):
+def root_link(request, link_slug):
     link = get_object_or_404(Link, slug=link_slug)
     link.click() # this will increement the clicked field
     
-    return redirect(link.urls)
+    return redirect(link.url)
+
+def add_link(request):
+    form = LinkForm()
+    context = {
+        "form":form
+    }
+    return render(request, 'links/create.html', context)
