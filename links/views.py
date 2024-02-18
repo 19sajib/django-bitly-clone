@@ -1,5 +1,11 @@
 from django.shortcuts import render
 
+from  .models import Link
+
 # Create your views here.
 def index(request):
-    return render(request, 'links/index.html',{})
+    links = Link.objects.all()
+    context = {
+        'links': links
+    }
+    return render(request, 'links/index.html', context)
