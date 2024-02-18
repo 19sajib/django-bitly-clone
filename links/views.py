@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 from  .models import Link
 
@@ -9,3 +9,9 @@ def index(request):
         'links': links
     }
     return render(request, 'links/index.html', context)
+
+def root_link(self, link_slug):
+    link = get_object_or_404(Link, slug=link_slug)
+    link.click() # this will increement the clicked field
+    
+    return redirect(link.urls)
